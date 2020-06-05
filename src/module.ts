@@ -2,7 +2,7 @@ import { MetricsPanelCtrl } from 'grafana/app/plugins/sdk';
 import $ from 'jquery';
 import _ from 'lodash';
 import appEvents from 'grafana/app/core/app_events';
-import dateTime from '@grafana/data';
+import moment from 'moment';
 import './style.css';
 import { DSInfo, RenderMode } from './types';
 import { examples } from './examples';
@@ -496,7 +496,7 @@ class AjaxCtrl extends MetricsPanelCtrl {
             console.log('TODO, parse header', v, h);
           } else {
             const vals: any = {};
-            for (const key in headers()) {
+            for (const key in headers(h)) {
               vals[key] = headers(key);
             }
             console.log('Header:', h, 'not found in:', vals, rsp);
@@ -504,7 +504,7 @@ class AjaxCtrl extends MetricsPanelCtrl {
         }
 
         if (when) {
-          txt += dateTime(when).format(this.panel.showTimeFormat);
+          txt += moment(when).format(this.panel.showTimeFormat);
         } else {
           txt += 'missing: ' + this.panel.showTimeValue;
         }
